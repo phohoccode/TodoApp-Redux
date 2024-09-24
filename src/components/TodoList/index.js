@@ -1,31 +1,35 @@
 import { Col, Row, Input, Button, Select, Tag } from 'antd';
 import Todo from '../Todo';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo } from '../redux/actions';
 import { v4 as uuidv4 } from 'uuid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { todoRemainingSelector } from '../redux/selector';
+// import { addTodo } from '../redux/actions';
+import todoListSlice from '../TodoList/TodoSlice'
 
 export default function TodoList() {
     const dispatch = useDispatch()
     const todoList = useSelector(todoRemainingSelector)
     const [todoName, setTodoName] = useState('')
-    const [prioriry, setPrioriry] = useState('Medium')
+    const [priority, setPriority] = useState('Medium')
 
     const hanldeAddTodo = () => {
-        dispatch(addTodo({
+        // dispatch(addTodo({
+        //     id: uuidv4(),
+        //     name: todoName,
+        //     priority: priority,
+        //     completed: false
+        // }))
+
+        dispatch(todoListSlice.actions.addTodo({
             id: uuidv4(),
             name: todoName,
-            prioriry: prioriry,
+            priority: priority,
             completed: false
         }))
         setTodoName('')
-        setPrioriry('Medium')
+        setPriority('Medium')
     }
-
-    useEffect(() => {
-        console.log(todoList)
-    }, [todoList])
 
     return (
         <Row style={{ height: 'calc(100% - 40px)' }}>
@@ -33,8 +37,9 @@ export default function TodoList() {
                 {todoList.map((todo, index) => (
                     <Todo
                         key={index}
+                        id={todo.id}
                         name={todo.name}
-                        prioriry={todo.prioriry}
+                        priority={todo.priority}
                         completed={todo.completed}
                     />
                 ))}
@@ -45,7 +50,7 @@ export default function TodoList() {
                         value={todoName}
                         onChange={(e) => setTodoName(e.target.value)}
                     />
-                    <Select value={prioriry} onChange={(value) => setPrioriry(value)}>
+                    <Select value={priority} onChange={(value) => setPriority(value)}>
                         <Select.Option value='High' label='High'>
                             <Tag color='red'>High</Tag>
                         </Select.Option>

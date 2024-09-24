@@ -1,12 +1,23 @@
-import { legacy_createStore as createStore, applyMiddleware } from 'redux'
+import { legacy_createStore as createStore } from 'redux'
 import rootReducer from './reducer'
 import { composeWithDevTools } from '@redux-devtools/extension'
-// import { thunk } from 'redux-thunk'
+import { configureStore } from '@reduxjs/toolkit'
+import filterSlice from '../Filters/FilterSlice'
+import todoSlice from '../TodoList/TodoSlice'
 
-const store = createStore(
-    rootReducer,
-    composeWithDevTools()
-    // composeWithDevTools(applyMiddleware(thunk))
-)
+
+// redux thuần
+// const store = createStore(
+//     rootReducer,
+//     composeWithDevTools()
+// )
+
+// redux toolkit
+const store = configureStore({
+    reducer: {
+        filter: filterSlice.reducer,
+        todoList: todoSlice.reducer
+    }
+})
 
 export default store
