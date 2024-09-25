@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import { todoRemainingSelector } from '../redux/selector';
 // import { addTodo } from '../redux/actions';
-import todoListSlice from '../TodoList/TodoSlice'
+import todoListSlice, { addNewTodo } from '../TodoList/TodoSlice'
 
 export default function TodoList() {
     const dispatch = useDispatch()
@@ -21,7 +21,14 @@ export default function TodoList() {
         //     completed: false
         // }))
 
-        dispatch(todoListSlice.actions.addTodo({
+        // dispatch(todoListSlice.actions.addTodo({
+        //     id: uuidv4(),
+        //     name: todoName,
+        //     priority: priority,
+        //     completed: false
+        // }))
+
+        dispatch(addNewTodo({
             id: uuidv4(),
             name: todoName,
             priority: priority,
